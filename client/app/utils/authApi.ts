@@ -8,6 +8,7 @@ export const authSignup = async (body: IFormValues) => {
       body,
       { withCredentials: true }
     );
+    if (!res.data) throw new Error("Error response data");
     return res.data;
   } catch (error) {
     console.error("Signup Error:", error);
@@ -36,6 +37,7 @@ export const authLogout = async () => {
       {},
       { withCredentials: true }
     );
+    if (!res.data) throw new Error("Error response data");
     return res.data;
   } catch (error) {
     console.error("Logout Error:", error);
@@ -51,6 +53,7 @@ export const getSession = async () => {
         withCredentials: true,
       }
     );
+    if (!res.data) throw new Error("Error response data");
     return res.data;
   } catch (error) {
     console.error("Get Session Error", error);

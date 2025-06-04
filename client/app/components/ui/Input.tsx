@@ -12,6 +12,7 @@ export interface IFormValues {
 
 type InputProps = {
   label: Path<IFormValues>;
+  showLabel?: boolean;
   register: UseFormRegister<IFormValues>;
   required?: boolean;
   type?: string;
@@ -22,6 +23,7 @@ type InputProps = {
 
 const Input = ({
   label,
+  showLabel,
   register,
   required = false,
   type = "text",
@@ -35,9 +37,8 @@ const Input = ({
   return (
     <div className="relative">
       <div className="flex justify-between items-center mb-1">
-        <label className="capitalize text-base font-semibold">{label}</label>
-        {hasError && (
-          <span className="capitalize text-sm text-red-500">{message}</span>
+        {showLabel && (
+          <label className="capitalize text-base font-semibold">{label}</label>
         )}
       </div>
       {textArea ? (
@@ -68,6 +69,9 @@ const Input = ({
             required ? { required: `${label} is required` } : {}
           )}
         />
+      )}
+      {hasError && (
+        <span className="capitalize text-sm text-red-500">{message}</span>
       )}
     </div>
   );

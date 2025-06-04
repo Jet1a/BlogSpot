@@ -13,12 +13,12 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left ">
       {user ? (
         <div>
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-2  rounded-md transition duration-200"
+            className="flex items-center gap-2 cursor-pointer rounded-md transition duration-200"
           >
             <span className="font-medium">Welcome, {user.name}</span>
             <svg

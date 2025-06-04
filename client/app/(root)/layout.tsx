@@ -1,9 +1,7 @@
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import { Toaster } from "react-hot-toast";
-
+import ToasterProvider from "../provider/ToasterProvider";
 
 const interFont = Inter({
   variable: "--font-inter",
@@ -20,13 +18,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
   return (
     <html lang="en">
-      <body className={`${interFont.variable} antialiased`}>
+      <body className={`${interFont.variable}`}>
         {children}
-        <Toaster />
+        <ToasterProvider />
       </body>
     </html>
   );

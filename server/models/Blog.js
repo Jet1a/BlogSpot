@@ -5,7 +5,8 @@ const blogSchema = new mongoose.Schema({
    title: String,
    author: String,
    content: String,
-   date: { type: Date, default: Date.now },
+   createdOn: { type: Date, default: Date.now },
+   updatedOn: { type: Date, default: Date.now },
    user: {
       type: Schema.Types.ObjectId,
       ref: 'User',

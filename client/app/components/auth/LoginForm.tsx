@@ -72,7 +72,7 @@ const LoginForm = ({ onToggleForm }: LoginFormProps) => {
         onClick={onToggleForm}
         className="cursor-pointer text-blue-500 font-semibold"
       >
-        Sign up 
+        Sign up
       </span>
     </>
   );
