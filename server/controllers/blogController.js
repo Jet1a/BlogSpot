@@ -7,10 +7,10 @@ export const getAllBlogs = async (req, res) => {
 
    try {
 
-      if (blogs.length === 0) {
+      if (!blogs || blogs.length === 0) {
          return res.status(404).json({
             success: false,
-            message: "No blogs found",
+            message: "No blogs found."
          });
       }
 
@@ -26,6 +26,75 @@ export const getAllBlogs = async (req, res) => {
       return res.status(500).json({
          success: false,
          message: "Failed to get blog",
+         error: error.message
+      });
+   }
+}
+
+export const getBlogDetail = async (req, res) => {
+   try {
+      const { blogId } = req.params
+      const blogDetail = await Blog.findById(blogId)
+
+      if (!blogDetail) {
+         return res.status(404).send("Blog does not exist with this ID.");
+      }
+
+      return res.status(200).json({
+         success: true,
+         message: "Successfully fetch Blog detail",
+         blog: blogDetail
+      });
+
+   } catch (error) {
+      return res.status(500).json({
+         success: false,
+         message: "Failed to fetch blog detail, Server Error",
+         error: error.message
+      });
+   }
+}
+
+export const getAllBlogByUser = async (req, res) => {
+
+   try {
+      const { userId } = req.params;
+
+      if (!userId || !userId.match(/^[0-9a-fA-F]{24}$/)) {
+         return res.status(400).json({
+            success: false,
+            message: "Invalid user ID format"
+         });
+      }
+
+      const user = await User.findById(userId).populate('blogs');
+
+      if (!user) {
+         return res.status(404).json({
+            success: false,
+            message: "User not found"
+         });
+      }
+
+      if (!user.blogs || user.blogs.length === 0) {
+         return res.status(200).json({
+            success: true,
+            message: "No blogs found for this user",
+            blogs: []
+         });
+      }
+
+      return res.status(200).json({
+         success: true,
+         message: "Successfully fetched all user blogs",
+         count: user.blogs.length,
+         blogs: user.blogs
+      });
+
+   } catch (error) {
+      return res.status(500).json({
+         success: false,
+         message: "Failed to fetch user blogs, Server Error",
          error: error.message
       });
    }

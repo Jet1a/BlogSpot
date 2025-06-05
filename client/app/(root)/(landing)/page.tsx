@@ -22,14 +22,14 @@ export default function Home() {
 
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
           <a
-            href="/blog"
+            href="/blogs"
             className="group inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             <BiBookOpen className="w-5 h-5 mr-3" />
             Explore Blog
             <BsArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
           </a>
-          <a href="/blog/share">
+          <a href="/blogs/share">
             <button className="cursor-pointer inline-flex items-center px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300">
               <FiPenTool className="w-5 h-5 mr-3" />
               Start Writing

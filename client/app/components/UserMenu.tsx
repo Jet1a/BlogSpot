@@ -40,6 +40,11 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
 
           {open && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
+              <Link href={`/blogs/users/${user._id}`}>
+                <button className="w-full text-left px-4 py-2 text-black hover:bg-gray-100 cursor-pointer">
+                  My Blogs
+                </button>
+              </Link>
               <button
                 onClick={onLogout}
                 className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer"

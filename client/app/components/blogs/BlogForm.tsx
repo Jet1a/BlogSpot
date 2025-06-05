@@ -49,7 +49,7 @@ const BlogForm = () => {
       }
 
       toast.success("Blog Created Success");
-      router.push("/blog");
+      router.push("/blogs");
     } catch (error) {
       console.error("Error creating Blog", error);
       toast.error("Create Failed");
@@ -161,7 +161,7 @@ const BlogForm = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-end">
                   <button
                     type="button"
-                    onClick={() => router.push("/blog")}
+                    onClick={() => router.push("/blogs")}
                     className="cursor-pointer px-6 py-3 border-2 border-slate-300 text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition-all duration-300"
                   >
                     Cancel

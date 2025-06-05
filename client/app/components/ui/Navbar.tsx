@@ -18,10 +18,10 @@ const Navbar = () => {
           <Link href="/">Home</Link>
         </li>
         <li className="hover:text-slate-600">
-          <Link href="/blog">Blog</Link>
+          <Link href="/blogs">Blog</Link>
         </li>
         <li className="hover:text-slate-600">
-          <Link href="/blog/share">Share your Story</Link>
+          <Link href="/blogs/share">Share your Story</Link>
         </li>
       </ul>
       <div className="flex justify-end">

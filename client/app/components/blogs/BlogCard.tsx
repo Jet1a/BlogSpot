@@ -3,12 +3,15 @@ import imagePlaceholder from "@/app/assets/images/imagePlaceholder.png";
 import Image from "next/image";
 import { IBlog } from "@/app/types/blogType";
 import { LuArrowUpRight, LuCalendar, LuClock, LuUser } from "react-icons/lu";
+import { useRouter } from "next/navigation";
 
 interface BlogCardProps {
   blog: IBlog;
 }
 
 const BlogCard = ({ blog }: BlogCardProps) => {
+  const router = useRouter();
+
   const truncateContent = (content: string, maxLength: number = 120) => {
     if (content.length <= maxLength) return content;
     return content.substring(0, maxLength) + "...";
@@ -23,7 +26,10 @@ const BlogCard = ({ blog }: BlogCardProps) => {
   };
 
   return (
-    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1 flex flex-col h-full">
+    <div
+      onClick={() => router.push(`/blogs/detail/${blog._id}`)}
+      className="group cursor-pointer bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1 flex flex-col h-full"
+    >
       <div className="relative overflow-hidden">
         <Image
           src={blog.imageUrl || imagePlaceholder}
@@ -74,7 +80,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
             </div>
           )}
 
-          <button className="flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200">
+          <button className="flex cursor-pointer items-center text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200">
             Read More
             <LuArrowUpRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
           </button>
