@@ -16,6 +16,7 @@ type InputProps = {
   register: UseFormRegister<IFormValues>;
   required?: boolean;
   type?: string;
+  value?: string;
   placeholder?: string;
   error: FieldErrors<IFormValues>;
   textArea?: boolean;
@@ -27,6 +28,7 @@ const Input = ({
   register,
   required = false,
   type = "text",
+  value,
   placeholder,
   error,
   textArea,
@@ -62,6 +64,7 @@ const Input = ({
               ? "border-red-500 outline-red-500"
               : "border-slate-200 outline-blue-500"
           }`}
+          value={value}
           type={type}
           placeholder={placeholder}
           {...register(

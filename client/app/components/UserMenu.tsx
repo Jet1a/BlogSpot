@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { IUser } from "../types/userType";
+import { MdOutlineArrowDropDown } from "react-icons/md";
 
 interface UserMenuProps {
   user: IUser | null;
@@ -21,26 +22,15 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
             className="flex items-center gap-2 cursor-pointer rounded-md transition duration-200"
           >
             <span className="font-medium">Welcome, {user.name}</span>
-            <svg
-              className="w-4 h-4 transition-transform duration-200"
-              style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+            <MdOutlineArrowDropDown />
           </button>
 
           {open && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
-              <Link href={`/blogs/users/${user._id}`}>
+              <Link
+                href={`/blogs/users/${user._id}`}
+                onClick={() => setOpen(!open)}
+              >
                 <button className="w-full text-left px-4 py-2 text-black hover:bg-gray-100 cursor-pointer">
                   My Blogs
                 </button>

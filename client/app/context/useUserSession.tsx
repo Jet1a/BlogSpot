@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "../types/userType";
 import { authLogout, getSession } from "../utils/authApi";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation"
 
 interface UserSessionContextType {
   user: IUser | null;
@@ -26,6 +27,7 @@ export const UserSessionProvider = ({
 }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -51,7 +53,7 @@ export const UserSessionProvider = ({
     authLogout();
     toast.success("Logout Success");
     setUser(null);
-    window.location.reload();
+    router.push("/");
   };
 
   return (

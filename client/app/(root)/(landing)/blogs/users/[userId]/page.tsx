@@ -2,9 +2,11 @@
 
 import BlogCard from "@/app/components/blogs/BlogCard";
 import { IBlog, IBlogs } from "@/app/types/blogType";
-import axios from "axios";
+import { deleteBlog, getAllUserBlog } from "@/app/utils/blogApi";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const UserBlogPage = () => {
   const params = useParams();
@@ -18,23 +20,51 @@ const UserBlogPage = () => {
     const fetchBlogs = async () => {
       setIsLoading(true);
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/users/${userId}`
-        );
-        if (res.status !== 200) {
-          setBlogData(undefined);
-          throw new Error("Failed fetch all blogs");
-        }
-        setBlogData(res.data);
+        const res = await getAllUserBlog(userId);
+        setBlogData(res);
       } catch (error) {
         console.error("Error fetching blogs", error);
-        throw new Error("FError fetching blogs");
+        throw new Error("FError fetching user blogs");
       } finally {
         setIsLoading(false);
       }
     };
     fetchBlogs();
   }, [userId]);
+
+  const handleDelete = async (blogId: string) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: "#3085d6",
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        await deleteBlog(userId as string, blogId);
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+
+        if (blogData) {
+          const updatedBlogs = blogData.blogs.filter(
+            (blog) => blog._id !== blogId
+          );
+          setBlogData({ ...blogData, blogs: updatedBlogs });
+        }
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      toast.error("Error!, Something went wrong.");
+    }
+  };
 
   return (
     <section className="p-8">
@@ -47,7 +77,12 @@ const UserBlogPage = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
         {blogData?.blogs &&
           blogData.blogs.map((blog: IBlog) => (
-            <BlogCard key={blog._id} blog={blog} />
+            <BlogCard
+              key={blog._id}
+              blog={blog}
+              isOwner={true}
+              onDelete={() => handleDelete(blog._id)}
+            />
           ))}
       </div>
     </section>

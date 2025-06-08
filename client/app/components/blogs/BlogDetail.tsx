@@ -1,3 +1,5 @@
+"use client";
+
 import { IBlog } from "@/app/types/blogType";
 import Image from "next/image";
 import {
@@ -14,13 +16,29 @@ import imagePlaceholder from "@/app/assets/images/imagePlaceholder.png";
 import { BiCalendar } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface BlogCardProps {
   blog: IBlog;
 }
 const BlogDetail = ({ blog }: BlogCardProps) => {
   const router = useRouter();
+  const [validSrc, setValidSrc] = useState<string | typeof imagePlaceholder>(
+    imagePlaceholder
+  );
 
+  useEffect(() => {
+    if (!blog.imageUrl) {
+      setValidSrc(imagePlaceholder);
+      return;
+    }
+
+    const img = new window.Image();
+    img.src = blog.imageUrl;
+
+    img.onload = () => setValidSrc(blog.imageUrl);
+    img.onerror = () => setValidSrc(imagePlaceholder);
+  }, [blog.imageUrl]);
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -75,7 +93,7 @@ const BlogDetail = ({ blog }: BlogCardProps) => {
         <article className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
           <div className="relative h-64 sm:h-80 lg:h-96 overflow-hidden">
             <Image
-              src={blog.imageUrl || imagePlaceholder}
+              src={validSrc}
               alt={blog.title}
               fill
               className="object-cover"

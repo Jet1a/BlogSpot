@@ -18,7 +18,7 @@ export const getAllBlogs = async (req, res) => {
          success: true,
          message: "All Blogs",
          count: blogs.length,
-         blogs: blogs,
+         blogs: blogs.sort((a, b) => b.createdOn - a.createdOn),
       });
 
    } catch (error) {
@@ -196,7 +196,7 @@ export const deleteBlog = async (req, res) => {
       const { userId } = req.body
 
       if (!userId) {
-         return res.status(401).send("Unauthorized, Create not Allowed")
+         return res.status(401).send("Unauthorized, Delete not Allowed")
       }
 
       const existingBlog = await Blog.findById(blogId);
