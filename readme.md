@@ -1,4 +1,6 @@
 # Blog Spot
+![image](https://github.com/user-attachments/assets/d0debe9f-5f07-43c8-84f7-b22091fa4191)
+![image](https://github.com/user-attachments/assets/ada2a529-3628-4d56-bf69-b02c0ef2c30a)
 
 Welcome to **Blog Spot**, a project designed to create a platform for sharing and reading blogs. This README provides an overview of the project, its structure, and how to get started.
 
