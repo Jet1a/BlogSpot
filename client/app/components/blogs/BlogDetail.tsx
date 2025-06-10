@@ -17,6 +17,7 @@ import { BiCalendar } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import MDEditor from "@uiw/react-md-editor";
 
 interface BlogCardProps {
   blog: IBlog;
@@ -54,11 +55,18 @@ const BlogDetail = ({ blog }: BlogCardProps) => {
   };
 
   const formatContent = (content: string) => {
-    return content.split("\n").map((paragraph, index) => (
-      <p key={index} className="mb-4 leading-relaxed">
-        {paragraph}
-      </p>
-    ));
+    return (
+      <div data-color-mode="light">
+        <MDEditor.Markdown
+          source={content}
+          style={{
+            whiteSpace: "pre-wrap",
+            backgroundColor: "transparent",
+            color: "#374151",
+          }}
+        />
+      </div>
+    );
   };
 
   return (
@@ -149,16 +157,13 @@ const BlogDetail = ({ blog }: BlogCardProps) => {
               </div>
             </div>
 
-            {/* Article Body */}
             <div className="prose prose-lg max-w-none">
               <div className="text-gray-700 text-lg leading-relaxed">
                 {formatContent(blog.content)}
               </div>
             </div>
 
-            {/* Article Footer */}
             <div className="mt-12 pt-8 border-t border-gray-200">
-              {/* Author Card */}
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8">
                 <div className="flex items-start space-x-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -186,7 +191,6 @@ const BlogDetail = ({ blog }: BlogCardProps) => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <button className="inline-flex items-center px-4 py-2 bg-red-100 text-red-600 rounded-full hover:bg-red-200 transition-colors duration-200">

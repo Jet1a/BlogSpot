@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-
+import mongoosePaginate from "mongoose-paginate-v2"
 const blogSchema = new mongoose.Schema({
    imageUrl: String,
    title: String,
@@ -13,5 +13,7 @@ const blogSchema = new mongoose.Schema({
       required: true
    }
 })
+
+blogSchema.plugin(mongoosePaginate)
 
 export default mongoose.model("Blog", blogSchema)

@@ -2,10 +2,10 @@ import axios from "axios";
 import { IFormValues } from "../components/ui/Input";
 import { ParamValue } from "next/dist/server/request/params";
 
-export const getAllBlog = async () => {
+export const getAllBlog = async (page?: number) => {
   try {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs?page=${page}`
     );
     if (res.status !== 200) {
       throw new Error("Failed fetch all blogs");

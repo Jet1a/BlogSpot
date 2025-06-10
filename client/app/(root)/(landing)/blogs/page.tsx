@@ -1,29 +1,34 @@
 "use client";
 
-import { IBlog, IBlogs } from "@/app/types/blogType";
+import { IBlog, IPaginationBlogs } from "@/app/types/blogType";
 import React, { useEffect, useState } from "react";
 import BlogCard from "@/app/components/blogs/BlogCard";
 import { getAllBlog } from "@/app/utils/blogApi";
+import Pagination from "@/app/components/ui/Pagination";
 
 const BlogPage = () => {
-  const [blogData, setBlogData] = useState<IBlogs>();
+  const [blogData, setBlogData] = useState<IPaginationBlogs>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchBlogs = async () => {
-      setIsLoading(true);
-      try {
-        const res = await getAllBlog();
-        setBlogData(res);
-      } catch (error) {
-        console.error("Error fetching blogs", error);
-        throw new Error("FError fetching blogs");
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchBlogs();
   }, []);
+
+  const fetchBlogs = async (page?: number) => {
+    setIsLoading(true);
+    try {
+      const res = await getAllBlog(page);
+      setBlogData(res);
+    } catch (error) {
+      console.error("Error fetching blogs", error);
+      throw new Error("FError fetching blogs");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handlePageChange = async (page: number) => {
+    await fetchBlogs(page);
+  };
 
   return (
     <section className="p-2 md:p-4 lg:p-8">
@@ -36,10 +41,22 @@ const BlogPage = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4">
-        {blogData?.blogs &&
-          blogData.blogs.map((blog: IBlog) => (
+        {blogData?.docs &&
+          blogData.docs.map((blog: IBlog) => (
             <BlogCard key={blog._id} blog={blog} />
           ))}
+      </div>
+
+      <div className="">
+        <Pagination
+          totalPages={blogData?.totalPages ?? 1}
+          hasNextPage={blogData?.hasNextPage ?? false}
+          hasPrevPage={blogData?.hasPrevPage ?? false}
+          currentPage={blogData?.page ?? 1}
+          nextPage={blogData?.nextPage ?? 1}
+          prevPage={blogData?.prevPage ?? 1}
+          onPageChange={handlePageChange}
+        />
       </div>
     </section>
   );

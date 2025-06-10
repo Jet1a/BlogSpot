@@ -27,6 +27,7 @@ const BlogForm = ({ blogId }: BlogFormProps) => {
     handleSubmit,
     reset,
     watch,
+    control,
     formState: { errors },
   } = useForm<IFormValues>();
 
@@ -173,6 +174,7 @@ const BlogForm = ({ blogId }: BlogFormProps) => {
 
                   <div className="ml-0 sm:ml-13">
                     <Input
+                      control={control}
                       showLabel={false}
                       label="imageUrl"
                       placeholder="https://example.com/your-amazing-image.jpg"
@@ -182,7 +184,6 @@ const BlogForm = ({ blogId }: BlogFormProps) => {
                   </div>
                 </div>
 
-                {/* Blog Title Section */}
                 <div className="group">
                   <div className="flex flex-col sm:flex-row sm:items-start space-y-2 sm:space-y-0 sm:space-x-3 mb-4">
                     <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
@@ -199,6 +200,7 @@ const BlogForm = ({ blogId }: BlogFormProps) => {
                   </div>
                   <div className="ml-0 sm:ml-13">
                     <Input
+                      control={control}
                       showLabel={false}
                       label="title"
                       placeholder="Your Amazing Blog Title Goes Here..."
@@ -209,7 +211,6 @@ const BlogForm = ({ blogId }: BlogFormProps) => {
                   </div>
                 </div>
 
-                {/* Blog Content Section */}
                 <div className="group">
                   <div className="flex flex-col sm:flex-row sm:items-start space-y-2 sm:space-y-0 sm:space-x-3 mb-4">
                     <div className="w-10 h-10 bg-gradient-to-r from-orange-400 to-red-500 rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
@@ -229,16 +230,17 @@ const BlogForm = ({ blogId }: BlogFormProps) => {
                     <Input
                       label="content"
                       showLabel={false}
+                      control={control}
                       placeholder="Start writing your blog content here... Share your thoughts, experiences, and insights that will captivate your readers."
                       register={register}
                       required
                       error={errors}
                       textArea
+                      markdown
                     />
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="pt-4 sm:pt-6 border-t border-slate-200">
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-end w-full">
                     <button

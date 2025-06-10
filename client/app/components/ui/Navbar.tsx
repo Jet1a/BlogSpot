@@ -12,8 +12,8 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white shadow-sm px-4 py-4 rounded-bl-xl rounded-br-xl">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="text-lg font-bold">
+      <div className="mx-auto flex items-center justify-between">
+        <div className="text-lg font-bold text-blue-500">
           <Link href="/">BLOGSPOT</Link>
         </div>
 

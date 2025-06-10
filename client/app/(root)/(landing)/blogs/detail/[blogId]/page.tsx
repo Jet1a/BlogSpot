@@ -23,7 +23,7 @@ const BlogDetailPage = () => {
     const fetchBlogs = async () => {
       setIsLoading(true);
       try {
-        const res = await getBlogById(blogId);
+        const res = await getBlogById(blogId as string);
         setBlogData(res);
       } catch (error) {
         console.error("Error fetching blog detail", error);

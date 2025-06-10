@@ -3,22 +3,23 @@ import User from "../models/User.js"
 
 export const getAllBlogs = async (req, res) => {
 
-   const blogs = await Blog.find();
+   const page = req.query.page || 1
+   const limit = req.query.limit || 8
 
    try {
 
-      if (!blogs || blogs.length === 0) {
-         return res.status(404).json({
-            success: false,
-            message: "No blogs found."
-         });
+      const options = {
+         page,
+         limit,
+         sort: { createdOn: -1 }
       }
+
+      const result = await Blog.paginate({}, options);
 
       return res.status(200).json({
          success: true,
          message: "All Blogs",
-         count: blogs.length,
-         blogs: blogs.sort((a, b) => b.createdOn - a.createdOn),
+         ...result
       });
 
    } catch (error) {
