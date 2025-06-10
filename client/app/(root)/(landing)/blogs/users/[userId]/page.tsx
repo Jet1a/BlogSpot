@@ -3,6 +3,7 @@
 import BlogCard from "@/app/components/blogs/BlogCard";
 import { IBlog, IBlogs } from "@/app/types/blogType";
 import { deleteBlog, getAllUserBlog } from "@/app/utils/blogApi";
+import Head from "next/head";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -67,25 +68,38 @@ const UserBlogPage = () => {
   };
 
   return (
-    <section className="p-8">
-      {isLoading && <p className="min-h-screen text-center py-8">Loading...</p>}
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold mb-2">Your Blog Posts</h1>
-        <p className="text-gray-600">Update or Delete, Mange your Posts here</p>
-      </div>
+    <>
+      <Head>
+        <meta
+          name="description"
+          content="All your Story here, manage all your blog"
+        />
+      </Head>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
-        {blogData?.blogs &&
-          blogData.blogs.map((blog: IBlog) => (
-            <BlogCard
-              key={blog._id}
-              blog={blog}
-              isOwner={true}
-              onDelete={() => handleDelete(blog._id)}
-            />
-          ))}
-      </div>
-    </section>
+      <section className="p-8">
+        {isLoading && (
+          <p className="min-h-screen text-center py-8">Loading...</p>
+        )}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold mb-2">Your Blog Posts</h1>
+          <p className="text-gray-600">
+            Update or Delete, Mange your Posts here
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+          {blogData?.blogs &&
+            blogData.blogs.map((blog: IBlog) => (
+              <BlogCard
+                key={blog._id}
+                blog={blog}
+                isOwner={true}
+                onDelete={() => handleDelete(blog._id)}
+              />
+            ))}
+        </div>
+      </section>
+    </>
   );
 };
 

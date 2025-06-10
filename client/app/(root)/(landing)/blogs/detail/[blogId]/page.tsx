@@ -3,6 +3,7 @@
 import BlogDetail from "@/app/components/blogs/BlogDetail";
 import { IBlog } from "@/app/types/blogType";
 import { getBlogById } from "@/app/utils/blogApi";
+import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -37,6 +38,12 @@ const BlogDetailPage = () => {
 
   return (
     <>
+      <Head>
+        <meta
+          name="description"
+          content="Look up what others story is talk about"
+        />
+      </Head>
       {isLoading && <p className="min-h-screen text-center py-8">Loading...</p>}
       {blogData && <BlogDetail blog={blogData.blog} />}
     </>
